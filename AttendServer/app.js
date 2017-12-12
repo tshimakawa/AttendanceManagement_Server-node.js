@@ -7,10 +7,18 @@ const bodyParser = require('body-parser');
 const https = require('https');
 const fs = require('fs');
 const mysql = require('mysql');
+const domain = require('express-domain-middleware');
 
 const index = require('./routes/index');
-const users = require('./routes/users');
-//const search_dest = require('./routes/search_dest');
+const checkRegistered = require('./routes/checkRegistered');
+const getStudentInfo = require('./routes/getStudentInfo');
+const getClassRoom = require('./routes/getClassRoom');
+const getLectureInfo = require('./routes/getLectureInfo');
+const registerStudent = require('./routes/registerStudent');
+const writeAttend = require('./routes/writeAttend');
+const writeLeave = require('./routes/writeLeave');
+const getLectureList = require('./routes/getLectureList');
+const getHistoryDetail = require('./routes/getHistoryDetail');
 
 const app = express();
 
@@ -25,10 +33,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(domain);
 
+//ルーティングの設定 各エンドポイントに対応したルーティング先に誘導
 app.use('/', index);
-app.use('/users', users);
-//app.use('/search_dest',search_dest);
+app.use('/checkRegistered',checkRegistered);
+app.use('/getStudentInfo',getStudentInfo);
+app.use('/getClassRoom',getClassRoom);
+app.use('/getLectureInfo',getLectureInfo);
+app.use('/registerStudent',registerStudent);
+app.use('/writeAttend',writeAttend);
+app.use('/writeLeave',writeLeave);
+app.use('/getLectureList',getLectureList);
+app.use('/getHistoryDetail',getHistoryDetail);
 
 //HTTPS通信で使用するためのSSLキーを設定
 const ssloptions = {
@@ -39,10 +56,6 @@ requestCert: true,
 rejectUnauthorized: false
 };
 
-//ルーティングの設定 各エンドポイントに対応したルーティング先に誘導
-app.use('/', index);
-app.use('/users', users);
-//app.login('/login',login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
