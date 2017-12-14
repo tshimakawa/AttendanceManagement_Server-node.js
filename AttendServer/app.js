@@ -49,9 +49,9 @@ app.use('/getHistoryDetail',getHistoryDetail);
 
 //HTTPS通信で使用するためのSSLキーを設定
 const ssloptions = {
-        key: fs.readFileSync ('./sslKey/privkey5.pem'),
-        cert: fs.readFileSync('./sslKey/cert5.pem'),
-        ca: [fs.readFileSync('./sslKey/chain5.pem'), fs.readFileSync('./sslKey/fullchain5.pem','utf-8')],
+        key: fs.readFileSync ('/home/tshimakawa/sslKey/privkey5.pem'),
+        cert: fs.readFileSync('/home/tshimakawa/sslKey/cert5.pem'),
+        ca: [fs.readFileSync('/home/tshimakawa/sslKey/chain5.pem'), fs.readFileSync('/home/tshimakawa/sslKey/fullchain5.pem','utf-8')],
 requestCert: true,
 rejectUnauthorized: false
 };
